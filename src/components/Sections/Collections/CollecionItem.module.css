@@ -1,0 +1,19 @@
+.card {
+  min-height: 700px;
+  padding: 2rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: snow;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.bottom p {
+  margin: 2.3rem 0;
+}

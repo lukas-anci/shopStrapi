@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
+
+/* :root {
+  font-size: 10px;
+} */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+body {
+  margin: 0;
+  font-family: 'Karla', sans-serif;
+  color: #333;
+  /* background-color: gray; */
+}
+
+.container {
+  margin: 0 5%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+section {
+  padding: 4% 0;
+}
+img {
+  max-width: 100%;
+}

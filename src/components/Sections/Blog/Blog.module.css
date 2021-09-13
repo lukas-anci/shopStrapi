@@ -1,0 +1,9 @@
+.blog {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.blog h1 {
+  width: 100%;
+  font-size: 3rem;
+}

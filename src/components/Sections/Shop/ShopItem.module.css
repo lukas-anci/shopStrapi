@@ -1,0 +1,39 @@
+.item {
+  max-width: 30%;
+  text-align: center;
+}
+.img-container {
+  position: relative;
+  height: 500px;
+}
+.img-container img {
+  /* border: 1px solid #000; */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.img-container button {
+  /* 100% - 20px */
+  width: calc(100% - 20px);
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+.info {
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.info h5 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  margin-top: 0.7rem;
+  font-size: 1.2rem;
+}
+.info h5:first-of-type {
+  width: 80%;
+}
+.info p::first-letter {
+  text-transform: uppercase;
+}

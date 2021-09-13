@@ -1,0 +1,41 @@
+.hero {
+  background-image: url('https://picsum.photos/id/1062/1200/800');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  color: snow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.center-part {
+  text-align: center;
+}
+.center-part h1 {
+  margin-top: 0;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.center-part p {
+  margin-bottom: 1rem;
+}
+
+.controll button:first-of-type {
+  margin-right: 0.5rem;
+}
+
+.social {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.dash {
+  width: 2rem;
+  height: 0.5px;
+  background-color: #f9f9f9;
+}
