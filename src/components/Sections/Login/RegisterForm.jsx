@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useInput from './../../../hooks/useInput';
 import useStrapiPost from './../../../hooks/useStrapiPost';
-import { postData } from './../../../utils/http';
+import { postData, registerData } from './../../../utils/http';
 import { AuthContext } from './../../../store/AuthProvider';
 import { Link, useHistory } from 'react-router-dom';
 import { doPasswordsMatch, verifyEmail } from '../../../utils/validate';
@@ -77,13 +77,13 @@ export default function RegisterForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     // reset errors
-    setFormError((state) => {
-      return {
-        email: false,
-        passwordMatch: false,
-        form: false,
-      };
-    });
+    // setFormError((state) => {
+    //   return {
+    //     email: false,
+    //     passwordMatch: false,
+    //     form: false,
+    //   };
+    // });
     if (!email || !password) {
       return setFormError({
         ...formError,
@@ -98,39 +98,44 @@ export default function RegisterForm() {
     //   setEmail('');
     //   setPassword('');
     // }
-    const passMatch = doPasswordsMatch(password, passwordRepeat);
-    const validEmail = verifyEmail(email);
-    console.log('validEmail', validEmail);
-    if (!validEmail) {
-      console.log('notmatch');
-      setFormError((errorState) => ({
-        ...errorState,
-        email: 'Invalid Email',
-      }));
-    }
-    // pass match validation
-    if (!passMatch) {
-      console.log('notmatch');
-      setFormError((errorState) => ({
-        ...errorState,
-        passwordMatch: 'pass must match',
-      }));
-    }
-    return;
-    // const postToStrapiAuthResult = await postData(
-    //   { email, password },
-    //   'auth/local'
-    // );
-    // console.log(postToStrapiAuthResult);
-    // irasyti tokena i kontexta
-    //   const userData = {
-    //     email: postToStrapiAuthResult.user.email,
-    //     username: postToStrapiAuthResult.user.username,
-    //   };
-    //   authCtx.login(postToStrapiAuthResult.jwt, userData);
+    // const passMatch = doPasswordsMatch(password, passwordRepeat);
+    // const validEmail = verifyEmail(email);
+    // console.log('validEmail', validEmail);
+    // if (!validEmail) {
+    //   console.log('notmatch');
+    //   setFormError((errorState) => ({
+    //     ...errorState,
+    //     email: 'Invalid Email',
+    //   }));
+    // }
+    // // pass match validation
+    // if (!passMatch) {
+    //   console.log('notmatch');
+    //   setFormError((errorState) => ({
+    //     ...errorState,
+    //     passwordMatch: 'pass must match',
+    //   }));
+    // }
+    // if (formError.email && formError.passwordMatch && formError.form) {
+    //   return;
+    // }
 
-    //   // redirect
-    //   await history.replace('/blog');
+    // pass validation
+    const postToStrapiAuthResult = await postData(
+      { email, password },
+      'auth/local/register',
+      true
+    );
+    console.log(postToStrapiAuthResult);
+    // irasyti tokena i kontexta
+    const userData = {
+      email: postToStrapiAuthResult.user.email,
+      username: postToStrapiAuthResult.user.username,
+    };
+    authCtx.login(postToStrapiAuthResult.jwt, userData);
+
+    // redirect
+    await history.replace('/');
   }
   useEffect(() => {
     return () => {
