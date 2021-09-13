@@ -68,57 +68,32 @@ export default function RegisterForm() {
   const [password, setPassword] = useInput('123456');
   const [passwordRepeat, setPasswordRepeat] = useInput('12345');
 
-  const [formError, setFormError] = useState({
-    email: false,
-    passwordMatch: false,
-    form: false,
-  });
+  const [formIsValid, setFormIsValid] = useState(null);
+
+  const isFormFilled = email.trim() !== '' && password.trim() !== '';
+  const emailIsValid = verifyEmail(email);
+  const passMatch = doPasswordsMatch(password, passwordRepeat);
+
+  useEffect(() => {
+    if (isFormFilled && emailIsValid && passMatch) {
+      return setFormIsValid(true);
+    }
+    setFormIsValid(false);
+  }, [isFormFilled, emailIsValid, passMatch]);
+
+  // const [formError, setFormError] = useState({
+  //   email: false,
+  //   passwordMatch: false,
+  //   form: false,
+  // });
 
   async function handleSubmit(e) {
     e.preventDefault();
     // reset errors
-    // setFormError((state) => {
-    //   return {
-    //     email: false,
-    //     passwordMatch: false,
-    //     form: false,
-    //   };
-    // });
-    if (!email || !password) {
-      return setFormError({
-        ...formError,
-        form: 'email and pass cant be blank',
-      });
-    }
+
     console.log(email, password, passwordRepeat);
-    // if (password !== passwordRepeat) {
-    //   setFormError('Passowords dont match');
-    // }
-    // if (password === passwordRepeat) {
-    //   setEmail('');
-    //   setPassword('');
-    // }
-    // const passMatch = doPasswordsMatch(password, passwordRepeat);
-    // const validEmail = verifyEmail(email);
-    // console.log('validEmail', validEmail);
-    // if (!validEmail) {
-    //   console.log('notmatch');
-    //   setFormError((errorState) => ({
-    //     ...errorState,
-    //     email: 'Invalid Email',
-    //   }));
-    // }
-    // // pass match validation
-    // if (!passMatch) {
-    //   console.log('notmatch');
-    //   setFormError((errorState) => ({
-    //     ...errorState,
-    //     passwordMatch: 'pass must match',
-    //   }));
-    // }
-    // if (formError.email && formError.passwordMatch && formError.form) {
-    //   return;
-    // }
+    if (!formIsValid) return;
+    console.log('we should not see this if the for mis valid');
 
     // pass validation
     const postToStrapiAuthResult = await postData(
@@ -140,32 +115,33 @@ export default function RegisterForm() {
   useEffect(() => {
     return () => {
       console.log('cleanup');
-      setFormError(null);
+      setFormIsValid(null);
     };
   }, []);
   return (
     <Card>
       <h2>Hello, welcome back</h2>
       <Hr />
-      {formError.passwordMatch && <p>{formError.passwordMatch}</p>}
-      {formError.email && <p>{formError.email}</p>}
+      {!isFormFilled && <p>Please fill all fields</p>}
+      {!emailIsValid && <p>Please check your email</p>}
+      {!passMatch && <p>Passwords do not match</p>}
       <form onSubmit={handleSubmit}>
         <input
-          className={formError.email ? 'invalid' : ''}
+          className={!emailIsValid ? 'invalid' : ''}
           value={email}
           onChange={setEmail}
           type="text"
           placeholder="Username or email"
         />
         <input
-          className={formError.passwordMatch ? 'invalid' : ''}
+          className={!isFormFilled.passwordMatch ? 'invalid' : ''}
           value={password}
           onChange={setPassword}
           type="password"
           placeholder="Password"
         />
         <input
-          className={formError.passwordMatch ? 'invalid' : ''}
+          className={!passMatch.passwordMatch ? 'invalid' : ''}
           value={passwordRepeat}
           onChange={setPasswordRepeat}
           type="password"
